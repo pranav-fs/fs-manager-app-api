@@ -1,0 +1,571 @@
+openapi: 3.0.3
+info:
+  description: FastSpring App Settings (Store and Company) API
+  title: FastSpring App Settings (Store and Company) API
+  version: 1.0.0
+externalDocs:
+  description: Find out more about FastSpring App Store Settings
+  url: https://developer.fastspring.com
+servers:
+- url: https://manager-api.fastspring.com/
+tags:
+- description: Everything about your store's settings
+  name: StoreSettings
+paths:
+  /storeSettings/{storeSiteId}:
+    get:
+      description: Retrieve the settings for a specific store.
+      parameters:
+      - description: The unique identifier for the store.
+        explode: false
+        in: path
+        name: storeSiteId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/_storeSettings__storeSiteId__get_200_response"
+          description: successful operation
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Store not found
+      summary: Get All Store Settings
+      x-accepts:
+      - application/json
+    post:
+      description: Update the settings for a specific store.
+      parameters:
+      - description: The unique identifier for the store.
+        explode: false
+        in: path
+        name: storeSiteId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreSettings"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/_storeSettings__storeSiteId__get_200_response"
+          description: successful operation
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Store not found
+      security:
+      - fs_identity_auth:
+        - write:storeSettings
+      summary: Update Store Settings
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    GeneralSettings:
+      example:
+        storePublicLogoUrl: https://openapi-generator.tech
+        emailFromName: emailFromName
+        storePublicDescription: storePublicDescription
+        storeName: storeName
+        storePublicLabelColor: storePublicLabelColor
+        storeDisplayName: storeDisplayName
+        storePublicUrl: https://openapi-generator.tech
+        storePublicFaviconUrl: https://openapi-generator.tech
+        replyToEmail: replyToEmail
+      properties:
+        storeName:
+          description: FS Assigned Name of Store
+          type: string
+        storeDisplayName:
+          description: Display Name of Store (Seller applied)
+          type: string
+        storePublicUrl:
+          format: uri
+          type: string
+        storePublicDescription:
+          type: string
+        storePublicLogoUrl:
+          description: S3 Upload URL for the store's logo
+          format: uri
+          type: string
+        storePublicFaviconUrl:
+          description: S3 Upload URL for the store's favicon
+          format: uri
+          type: string
+        storePublicLabelColor:
+          description: Hex color code for the store's header (for easy identification)
+          type: string
+        replyToEmail:
+          format: email
+          type: string
+        emailFromName:
+          type: string
+      type: object
+    CatalogSettings:
+      example:
+        defaultProductFormat: defaultProductFormat
+        catalogMode: gaming
+        urlLinkSourcesEnabled: true
+        advancedPricingEnabled: true
+        defaultTaxCode: defaultTaxCode
+      properties:
+        defaultTaxCode:
+          description: Default Avalara tax code for the store catalog items
+          type: string
+        defaultProductFormat:
+          description: Default product type for the store catalog items
+          type: string
+        catalogMode:
+          enum:
+          - gaming
+          - subscriptions
+          - digital
+          - physical
+          - services
+          type: string
+        advancedPricingEnabled:
+          description: Enable advanced pricing features for the store catalog items
+          type: boolean
+        urlLinkSourcesEnabled:
+          description: Enable URL link sources for the store catalog items
+          type: boolean
+      type: object
+    StoreLocalizationSettings:
+      example:
+        supportedCurrencies:
+        - supportedCurrencies
+        - supportedCurrencies
+        defaultLanguage: defaultLanguage
+        supportedLanguages:
+        - supportedLanguages
+        - supportedLanguages
+        supportedRegions:
+        - supportedRegions
+        - supportedRegions
+        baseCurrency: baseCurrency
+      properties:
+        baseCurrency:
+          description: Default currency for the store
+          type: string
+        supportedCurrencies:
+          items:
+            type: string
+          type: array
+        defaultLanguage:
+          description: Default language for the store
+          type: string
+        supportedLanguages:
+          items:
+            type: string
+          type: array
+        supportedRegions:
+          description: List of supported regions for the store
+          items:
+            type: string
+          type: array
+      type: object
+    PaymentSettings:
+      example:
+        defaultPaymentMethod: defaultPaymentMethod
+        preferredPaymentMethodPerRegion:
+          key: preferredPaymentMethodPerRegion
+        oneClickPaymentEnabled: true
+        paymentMethods:
+        - credit_card
+        - credit_card
+        planManagementEnabled: true
+      properties:
+        paymentMethods:
+          items:
+            enum:
+            - credit_card
+            - paypal
+            - bank_transfer
+            - crypto
+            type: string
+          type: array
+        oneClickPaymentEnabled:
+          description: Enable one-click payment feature for the store
+          type: boolean
+        defaultPaymentMethod:
+          description: Default payment method for the store
+          type: string
+        preferredPaymentMethodPerRegion:
+          additionalProperties:
+            type: string
+          type: object
+        planManagementEnabled:
+          description: Enable SaaS subscription plan management feature for the store
+          type: boolean
+      type: object
+    InvoicingSettings:
+      example:
+        contactManagementEnabled: true
+        defaultDeliveryMethod: After Payment
+        defaultQuoteNotes: defaultQuoteNotes
+        allowSeparateBillingContact: true
+        quoteManagementEnabled: true
+        enableSecureInvoiceURL: true
+        intelligentQuoteManagementEnabled: true
+        defaultDaysForInvoiceReminder: 0
+        defaultNetTerms: NET 0
+        enableSelfServiceUpgrade: true
+        checkPaymentInstructionsDisplayEnabled: true
+        enablePrePaymentManualFulfillment: true
+        apiInvoicingEnabled: true
+      properties:
+        quoteManagementEnabled:
+          description: Enable quotes and digital invoicing feature for the store
+          type: boolean
+        intelligentQuoteManagementEnabled:
+          description: Enable intelligent quote management feature for the store
+          type: boolean
+        defaultQuoteNotes:
+          description: Default notes for quotes to be appended to all quotes
+          type: string
+        defaultDeliveryMethod:
+          description: "Default delivery method for invoices (e.g., \"Email\", \"\
+            Download\")"
+          enum:
+          - After Payment
+          - Require Approval
+          - Manually Fulfilled
+          - Offline Fulfillment
+          type: string
+        defaultNetTerms:
+          description: "Default net terms for invoices (e.g., \"Net 30\")"
+          enum:
+          - NET 0
+          - NET 1
+          - NET 7
+          - NET 14
+          - NET 30
+          - NET 60
+          - NET 90
+          type: string
+        defaultDaysForInvoiceReminder:
+          description: Default number of days before sending an invoice reminder
+          type: integer
+        enablePrePaymentManualFulfillment:
+          description: Enable pre-payment manual fulfillment for the store
+          type: boolean
+        enableSecureInvoiceURL:
+          description: Enable secure invoice URL feature for the store
+          type: boolean
+        enableSelfServiceUpgrade:
+          description: Enable self-service upgrade feature for the store SAAS feature
+          type: boolean
+        allowSeparateBillingContact:
+          description: Allow separate billing contact for the store
+          type: boolean
+        contactManagementEnabled:
+          description: Enable contact management feature for the store
+          type: boolean
+        checkPaymentInstructionsDisplayEnabled:
+          description: Enable/Disable check payment/deposit instructions for the store
+            in US
+          type: boolean
+        apiInvoicingEnabled:
+          description: Enable API invoicing feature for the store
+          type: boolean
+      type: object
+    SubscriptionSettings:
+      example:
+        subscriptionTrialPeriodDays: 6
+        coTerminusBillingEnabled: true
+        allowAutomaticToManualSubscription: true
+        trialWithoutPaymentEnabled: true
+        subscriptionCancellationChoiceGlobal: immediate
+        subscriptionPaymentMethods:
+        - credit_card
+        - credit_card
+        subscriptionDunningSettings:
+          dunningIntervalDays: 5
+          dunningRetries: 1
+          dunningNotificationEnabled: true
+      properties:
+        coTerminusBillingEnabled:
+          description: Enable subscription Co Terminus Billing
+          type: boolean
+        allowAutomaticToManualSubscription:
+          description: Allow automatic to manual subscription conversion
+          type: boolean
+        subscriptionTrialPeriodDays:
+          description: Default trial period in days for subscriptions
+          type: integer
+        trialWithoutPaymentEnabled:
+          description: Enable trial without payment for subscriptions
+          type: boolean
+        subscriptionCancellationChoiceGlobal:
+          description: Default subscription cancellation choice for the store
+          enum:
+          - immediate
+          - end_of_period
+          - no_cancellation
+          type: string
+        subscriptionDunningSettings:
+          $ref: "#/components/schemas/SubscriptionSettings_subscriptionDunningSettings"
+        subscriptionPaymentMethods:
+          items:
+            enum:
+            - credit_card
+            - paypal
+            - bank_transfer
+            - wallets
+            type: string
+          type: array
+      type: object
+    SupportSettings:
+      example:
+        supportEmail: supportEmail
+        supportPhoneNumber: supportPhoneNumber
+        supportHours: supportHours
+        supportOrganization: supportOrganization
+        supportNotes: supportNotes
+        displaySupportContactOnReceipt: true
+      properties:
+        supportEmail:
+          description: Support email address for the store
+          format: email
+          type: string
+        supportPhoneNumber:
+          description: Support phone number for the store
+          type: string
+        supportHours:
+          description: "Support hours for the store (e.g., \"Mon-Fri 9am-5pm\")"
+          type: string
+        supportOrganization:
+          description: Support organization name for the store
+          type: string
+        supportNotes:
+          description: Additional support notes or instructions for the store
+          type: string
+        displaySupportContactOnReceipt:
+          description: Display support contact information on receipts
+          type: boolean
+      type: object
+    StoreSettings:
+      example:
+        invoicingAdminSettings:
+          contactManagementEnabled: true
+          defaultDeliveryMethod: After Payment
+          defaultQuoteNotes: defaultQuoteNotes
+          allowSeparateBillingContact: true
+          quoteManagementEnabled: true
+          enableSecureInvoiceURL: true
+          intelligentQuoteManagementEnabled: true
+          defaultDaysForInvoiceReminder: 0
+          defaultNetTerms: NET 0
+          enableSelfServiceUpgrade: true
+          checkPaymentInstructionsDisplayEnabled: true
+          enablePrePaymentManualFulfillment: true
+          apiInvoicingEnabled: true
+        supportSettings:
+          supportEmail: supportEmail
+          supportPhoneNumber: supportPhoneNumber
+          supportHours: supportHours
+          supportOrganization: supportOrganization
+          supportNotes: supportNotes
+          displaySupportContactOnReceipt: true
+        storeLocalizationSettings:
+          supportedCurrencies:
+          - supportedCurrencies
+          - supportedCurrencies
+          defaultLanguage: defaultLanguage
+          supportedLanguages:
+          - supportedLanguages
+          - supportedLanguages
+          supportedRegions:
+          - supportedRegions
+          - supportedRegions
+          baseCurrency: baseCurrency
+        storeSiteId: storeSiteId
+        paymentAdminSettings:
+          defaultPaymentMethod: defaultPaymentMethod
+          preferredPaymentMethodPerRegion:
+            key: preferredPaymentMethodPerRegion
+          oneClickPaymentEnabled: true
+          paymentMethods:
+          - credit_card
+          - credit_card
+          planManagementEnabled: true
+        generalAdminSettings:
+          storePublicLogoUrl: https://openapi-generator.tech
+          emailFromName: emailFromName
+          storePublicDescription: storePublicDescription
+          storeName: storeName
+          storePublicLabelColor: storePublicLabelColor
+          storeDisplayName: storeDisplayName
+          storePublicUrl: https://openapi-generator.tech
+          storePublicFaviconUrl: https://openapi-generator.tech
+          replyToEmail: replyToEmail
+        catalogAdminSettings:
+          defaultProductFormat: defaultProductFormat
+          catalogMode: gaming
+          urlLinkSourcesEnabled: true
+          advancedPricingEnabled: true
+          defaultTaxCode: defaultTaxCode
+        subscriptionSettings:
+          subscriptionTrialPeriodDays: 6
+          coTerminusBillingEnabled: true
+          allowAutomaticToManualSubscription: true
+          trialWithoutPaymentEnabled: true
+          subscriptionCancellationChoiceGlobal: immediate
+          subscriptionPaymentMethods:
+          - credit_card
+          - credit_card
+          subscriptionDunningSettings:
+            dunningIntervalDays: 5
+            dunningRetries: 1
+            dunningNotificationEnabled: true
+      properties:
+        storeSiteId:
+          type: string
+        generalAdminSettings:
+          $ref: "#/components/schemas/GeneralSettings"
+        catalogAdminSettings:
+          $ref: "#/components/schemas/CatalogSettings"
+        storeLocalizationSettings:
+          $ref: "#/components/schemas/StoreLocalizationSettings"
+        paymentAdminSettings:
+          $ref: "#/components/schemas/PaymentSettings"
+        invoicingAdminSettings:
+          $ref: "#/components/schemas/InvoicingSettings"
+        supportSettings:
+          $ref: "#/components/schemas/SupportSettings"
+        subscriptionSettings:
+          $ref: "#/components/schemas/SubscriptionSettings"
+      required:
+      - storeSiteId
+      type: object
+    Error:
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+        details:
+          description: "Additional error details, if available"
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    _storeSettings__storeSiteId__get_200_response:
+      example:
+        settings:
+          invoicingAdminSettings:
+            contactManagementEnabled: true
+            defaultDeliveryMethod: After Payment
+            defaultQuoteNotes: defaultQuoteNotes
+            allowSeparateBillingContact: true
+            quoteManagementEnabled: true
+            enableSecureInvoiceURL: true
+            intelligentQuoteManagementEnabled: true
+            defaultDaysForInvoiceReminder: 0
+            defaultNetTerms: NET 0
+            enableSelfServiceUpgrade: true
+            checkPaymentInstructionsDisplayEnabled: true
+            enablePrePaymentManualFulfillment: true
+            apiInvoicingEnabled: true
+          supportSettings:
+            supportEmail: supportEmail
+            supportPhoneNumber: supportPhoneNumber
+            supportHours: supportHours
+            supportOrganization: supportOrganization
+            supportNotes: supportNotes
+            displaySupportContactOnReceipt: true
+          storeLocalizationSettings:
+            supportedCurrencies:
+            - supportedCurrencies
+            - supportedCurrencies
+            defaultLanguage: defaultLanguage
+            supportedLanguages:
+            - supportedLanguages
+            - supportedLanguages
+            supportedRegions:
+            - supportedRegions
+            - supportedRegions
+            baseCurrency: baseCurrency
+          storeSiteId: storeSiteId
+          paymentAdminSettings:
+            defaultPaymentMethod: defaultPaymentMethod
+            preferredPaymentMethodPerRegion:
+              key: preferredPaymentMethodPerRegion
+            oneClickPaymentEnabled: true
+            paymentMethods:
+            - credit_card
+            - credit_card
+            planManagementEnabled: true
+          generalAdminSettings:
+            storePublicLogoUrl: https://openapi-generator.tech
+            emailFromName: emailFromName
+            storePublicDescription: storePublicDescription
+            storeName: storeName
+            storePublicLabelColor: storePublicLabelColor
+            storeDisplayName: storeDisplayName
+            storePublicUrl: https://openapi-generator.tech
+            storePublicFaviconUrl: https://openapi-generator.tech
+            replyToEmail: replyToEmail
+          catalogAdminSettings:
+            defaultProductFormat: defaultProductFormat
+            catalogMode: gaming
+            urlLinkSourcesEnabled: true
+            advancedPricingEnabled: true
+            defaultTaxCode: defaultTaxCode
+          subscriptionSettings:
+            subscriptionTrialPeriodDays: 6
+            coTerminusBillingEnabled: true
+            allowAutomaticToManualSubscription: true
+            trialWithoutPaymentEnabled: true
+            subscriptionCancellationChoiceGlobal: immediate
+            subscriptionPaymentMethods:
+            - credit_card
+            - credit_card
+            subscriptionDunningSettings:
+              dunningIntervalDays: 5
+              dunningRetries: 1
+              dunningNotificationEnabled: true
+      properties:
+        settings:
+          $ref: "#/components/schemas/StoreSettings"
+      type: object
+    SubscriptionSettings_subscriptionDunningSettings:
+      example:
+        dunningIntervalDays: 5
+        dunningRetries: 1
+        dunningNotificationEnabled: true
+      properties:
+        dunningRetries:
+          description: Number of dunning retries before cancellation
+          type: integer
+        dunningIntervalDays:
+          description: Interval in days between dunning retries
+          type: integer
+        dunningNotificationEnabled:
+          description: Enable dunning notifications for the store
+          type: boolean
+      type: object
+  securitySchemes:
+    fs_identity_auth:
+      flows:
+        implicit:
+          authorizationUrl: https://qa0-identity-service.fastspring.com/identity/oauth/token
+          scopes:
+            write:storeSettings: modify settings
+            read:storeSettings: read settings
+      type: oauth2
