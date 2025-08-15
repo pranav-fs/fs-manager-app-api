@@ -44,17 +44,23 @@ import javax.annotation.Generated;
 public interface StoreSettingsApi {
 
 
-    @GetMapping("/site")
-    ResponseEntity<Site> createSite(@RequestBody Site site);
+//    @GetMapping("/site")
+//    ResponseEntity<Site> createSite(@RequestBody Site site);
+//
+//    @GetMapping("/site/{id}")
+//    ResponseEntity<Site> getSite(@PathVariable Long id);
+//
+//    @PostMapping("/basic-store-site")
+//    ResponseEntity<BasicStoreSite> createBasicStoreSite(@RequestBody BasicStoreSite basicStoreSite);
+//
+//    @GetMapping("/basic-store-site/{id}")
+//    ResponseEntity<BasicStoreSite> getBasicStoreSite(@PathVariable Long id);
 
-    @GetMapping("/site/{id}")
-    ResponseEntity<Site> getSite(@PathVariable Long id);
+    @GetMapping("/live")
+    public ResponseEntity<List<BasicStoreSite>> getLiveStores();
 
-    @PostMapping("/basic-store-site")
-    ResponseEntity<BasicStoreSite> createBasicStoreSite(@RequestBody BasicStoreSite basicStoreSite);
-
-    @GetMapping("/basic-store-site/{id}")
-    ResponseEntity<BasicStoreSite> getBasicStoreSite(@PathVariable Long id);
+    @GetMapping("/not-live")
+    public ResponseEntity<List<BasicStoreSite>> getNotLiveStores();
 
 
     default Optional<NativeWebRequest> getRequest() {

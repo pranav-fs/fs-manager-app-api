@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozermapper.github.io/schema/bean-mapping"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping http://dozermapper.github.io/schema/bean-mapping.xsd">
+    <configuration>
+        <stop-on-errors>true</stop-on-errors>
+        <date-format>yyyy-MM-dd HH:mm:ss</date-format>
+        <wildcard>true</wildcard>
+    </configuration>
+
+
+    <mapping>
+        <class-a>com.fastspring.pricing.client.vo.PricingResponse</class-a>
+        <class-b>com.brightmarket.engine.acquisition.OrderSessionPricingExtended</class-b>
+        <field copy-by-reference="true">
+            <a>fees</a>
+            <b>fees</b>
+            <a-hint>com.fastspring.pricing.client.vo.FeeResponse</a-hint>
+            <b-hint>com.fastspring.pricing.client.vo.FeeResponse</b-hint>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.fastspring.pricing.client.vo.PriceResponse</class-a>
+        <class-b>com.brightmarket.engine.acquisition.OrderSessionPricingItemExtended</class-b>
+        <field copy-by-reference="true">
+            <a>rules</a>
+            <b>rules</b>
+            <a-hint>java.util.Map</a-hint>
+            <b-hint>java.util.Map</b-hint>
+        </field>
+        <field>
+            <a>grossModeOption</a>
+            <b>grossModeOption</b>
+            <a-hint>com.fastspring.domain.price.GrossModeOption</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.fastspring.pricing.client.vo.FeeResponse</class-a>
+        <class-b>com.brightmarket.engine.acquisition.OrderSessionPricingItemExtended</class-b>
+        <field copy-by-reference="true">
+            <a>rules</a>
+            <b>rules</b>
+            <a-hint>java.util.Map</a-hint>
+            <b-hint>java.util.Map</b-hint>
+        </field>
+        <field>
+            <a>withTaxListPrice</a>
+            <b>withTaxUnitListPrice</b>
+        </field>
+        <field>
+            <a>withTaxNetPrice</a>
+            <b>withTaxUnitNetPrice</b>
+        </field>
+        <field>
+            <a>withTaxDiscountAmount</a>
+            <b>withTaxUnitDiscountAmount</b>
+        </field>
+        <field>
+            <a>withTaxListPrice</a>
+            <b>withTaxExtendedListPrice</b>
+        </field>
+        <field>
+            <a>withTaxNetPrice</a>
+            <b>withTaxExtendedNetPrice</b>
+        </field>
+        <field>
+            <a>withTaxDiscountAmount</a>
+            <b>withTaxExtendedDiscountAmount</b>
+        </field>
+        <field>
+            <a>withoutTaxListPrice</a>
+            <b>withoutTaxUnitListPrice</b>
+        </field>
+        <field>
+            <a>withoutTaxNetPrice</a>
+            <b>withoutTaxUnitNetPrice</b>
+        </field>
+        <field>
+            <a>withoutTaxDiscountAmount</a>
+            <b>withoutTaxUnitDiscountAmount</b>
+        </field>
+        <field>
+            <a>withoutTaxListPrice</a>
+            <b>withoutTaxExtendedListPrice</b>
+        </field>
+        <field>
+            <a>withoutTaxNetPrice</a>
+            <b>withoutTaxExtendedNetPrice</b>
+        </field>
+        <field>
+            <a>withoutTaxDiscountAmount</a>
+            <b>withoutTaxExtendedDiscountAmount</b>
+        </field>
+        <field>
+            <a>taxes</a>
+            <b>unitTaxes</b>
+        </field>
+        <field>
+            <a>taxes</a>
+            <b>extendedTaxes</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.fastspring.pricing.client.vo.PriceResponse</class-a>
+        <class-b>com.brightmarket.engine.acquisition.OrderSessionItemExtended</class-b>
+        <field-exclude>
+            <a>rules</a>
+            <b>rules</b>
+        </field-exclude>
+        <field>
+            <a>grossModeOption</a>
+            <b>grossModeOption</b>
+            <a-hint>com.fastspring.domain.price.GrossModeOption</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.fastspring.pricing.client.vo.PriceResponse</class-a>
+        <class-b>com.brightmarket.core.acquisition.AcquisitionTransactionItemPriceDetail</class-b>
+        <field-exclude>
+            <a>rules</a>
+            <b>rules</b>
+        </field-exclude>
+    </mapping>
+
+    <mapping>
+        <class-a>com.brightmarket.engine.acquisition.OrderSessionPricingItemExtended</class-a>
+        <class-b>com.brightmarket.core.acquisition.AcquisitionTransactionItemPriceDetail</class-b>
+        <field copy-by-reference="true">
+            <a>rules</a>
+            <b>rules</b>
+            <a-hint>java.util.Map</a-hint>
+            <b-hint>java.util.Map</b-hint>
+        </field>
+        <field>
+            <a>sourceSystem</a>
+            <b>sourceSystem</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>com.fastspring.pricing.client.vo.SourceSystem</b-hint>
+        </field>
+        <field>
+            <a>storeTaxMode</a>
+            <b>storeTaxMode</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>com.fastspring.domain.price.TaxMode</b-hint>
+        </field>
+        <field>
+            <a>grossModeOption</a>
+            <b>grossModeOption</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>com.fastspring.domain.price.GrossModeOption</b-hint>
+        </field>
+        <field>
+            <a>taxIncludedMode</a>
+            <b>taxIncludedMode</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>com.fastspring.pricing.client.vo.TaxIncludedMode</b-hint>
+        </field>
+    </mapping>
+
+</mappings>

@@ -9,8 +9,14 @@ import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(
+        exclude = {
+                org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration.class,
+                org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class
+        },
     nameGenerator = FullyQualifiedAnnotationBeanNameGenerator.class
+
 )
+
 @EnableJpaRepositories(basePackages = "com.fastspring.app.Repository")
 @EntityScan(basePackages = {"com.brightmarket.core.site"})
 @ComponentScan(
